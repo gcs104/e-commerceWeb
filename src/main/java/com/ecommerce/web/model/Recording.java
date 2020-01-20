@@ -1,7 +1,12 @@
 package com.ecommerce.web.model;
 
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
+
 import java.util.Date;
 
+@ConfigurationProperties(prefix = "recording")
+@Component
 public class Recording {
     // 记录的id
     private String id;
