@@ -1,45 +1,36 @@
 server:
-  port:8081
+  port: 8081
   servlet:
-    context-path:/e-test
+    context-path: /e-test
 
-remark1:假装下面的东西是从数据库读出来的
-user_login:
-  id:1
-  gmt_create:2020/01/01
-  gmt_modifiled:2020/01/01
-  name:我是一个人
-  password:12356
-
-user_info:
-  id:1
-  gmt_create:2020/01/01
-  gmt_modifiled:2020/01/20
-  name:我是一个人
-  profile:http://5b0988e595225.cdn.sohucs.com/q_70,c_zoom,w_640/images/20181214/6e00a9e09e8d4be8af46ebcd6e44a9db.jpeg
-  gender:male
-  amount:5000
-  payCode:330226
-  shopping:4,5
-  recording:1,2,3
-  address:地址1;地址2
+user:
+  id: 1
+  name: 我是一个人
+  password: 12356
+  profile: http://5b0988e595225.cdn.sohucs.com/q_70,c_zoom,w_640/images/20181214/6e00a9e09e8d4be8af46ebcd6e44a9db.jpeg
+  gender: male
+  amount: 5000
+  payCode: 330226
+  shopping: 4,5
+  recording: 1,2,3
+  address: 地址1;地址2
 
 good:
-  id:1
-  gmt_create:2020/01/01
-  gmt_modifiled:2020/01/20
-  name:筷子
-  price:10.0
-  notice:无
+  id: 1
+  gmtCreate: 2020/01/01
+  gmtModifiled: 2020/01/20
+  name: 筷子
+  price: 10.0
+  notice: 无
 
 recording:
-  id:4
-  gmt_create:2020/01/01
-  gmt_modifiled:2020/01/20
-  buyer:1
-  good:1
-  num:10
-  amount:100.0
-  isOver:false
+  id: 4
+  gmtCreate: 2020/01/01
+  gmtModifiled: 2020/01/20
+  buyer: 1
+  good: 1
+  num: 10
+  amount: 100.0
+  isOver: false
 
 

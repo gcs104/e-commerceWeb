@@ -1,7 +1,11 @@
 package com.ecommerce.web.model;
 
 import com.ecommerce.web.type.Gender;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
 
+@ConfigurationProperties(prefix = "user")
+@Component
 public class User {
     //用户id
     private String id;
