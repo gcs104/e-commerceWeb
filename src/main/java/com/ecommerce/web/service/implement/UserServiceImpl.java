@@ -4,13 +4,15 @@ import com.ecommerce.web.entity.User;
 import com.ecommerce.web.repository.UserRepository;
 import com.ecommerce.web.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+@Service
 public class UserServiceImpl implements UserService {
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository ;
 
     @Override
     public User search(String id) {

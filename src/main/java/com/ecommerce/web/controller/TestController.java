@@ -9,9 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class TestController {
-    @Autowired
-    UserRepository userRepository;
-    UserService userService = new UserServiceImpl();
+    private UserService userService = new UserServiceImpl();
     @GetMapping(value = "/UserTest")
     public User updateUserTest(@RequestParam("id")String id){
         User user = userService.search(id);
