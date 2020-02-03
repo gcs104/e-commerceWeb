@@ -1,14 +1,16 @@
-package com.ecommerce.web.model;
+package com.ecommerce.web.entity;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
-
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import java.math.BigDecimal;
 import java.util.Date;
 
-@ConfigurationProperties(prefix = "recording")
-@Component
+@Entity
 public class Recording {
     // 记录的id
+    @Id
+    @GeneratedValue
     private String id;
     // 记录的发生时间(添加入购物车的时间)
     private Date gmtCreate;
@@ -21,7 +23,7 @@ public class Recording {
     //购买数量
     private int num;
     //总价
-    private double amount;
+    private BigDecimal amount;
     //是否交易完成
     private boolean isOver;
 
@@ -73,11 +75,11 @@ public class Recording {
         this.num = num;
     }
 
-    public double getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 

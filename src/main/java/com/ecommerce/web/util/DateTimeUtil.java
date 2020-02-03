@@ -1,8 +1,7 @@
-package com.whz.commerce.util;
+package com.ecommerce.web.util;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 
 public class DateTimeUtil {

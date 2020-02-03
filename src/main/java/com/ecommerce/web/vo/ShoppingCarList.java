@@ -1,4 +1,4 @@
-package com.whz.commerce.vo;
+package com.ecommerce.web.vo;
 
 import java.math.BigDecimal;
 import java.util.List;

@@ -1,17 +1,20 @@
-package com.ecommerce.web.model;
+package com.ecommerce.web.entity;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import java.math.BigDecimal;
 
-@ConfigurationProperties(prefix = "good")
-@Component
+@Entity
 public class Good {
     // 商品id
+    @Id
+    @GeneratedValue
     private String id;
     // 商品名称
     private String name;
     // 商品价格
-    private double price;
+    private BigDecimal price;
     //备注
     private String notice;
 
@@ -31,11 +34,11 @@ public class Good {
         this.name = name;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
@@ -47,3 +50,4 @@ public class Good {
         this.notice = notice;
     }
 }
+

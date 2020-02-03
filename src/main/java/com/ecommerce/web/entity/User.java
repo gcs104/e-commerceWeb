@@ -1,14 +1,21 @@
-package com.ecommerce.web.model;
+package com.ecommerce.web.entity;
 
-import com.ecommerce.web.type.Gender;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
 
-@ConfigurationProperties(prefix = "user")
-@Component
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+@Entity
 public class User {
     //用户id
+    @Id
+    @GeneratedValue
     private String id;
+    //创建时间
+    private LocalDateTime gmtCreated;
+    //修改时间
+    private LocalDateTime gmtModifiled;
     //用户姓名
     private String name;
     //用户头像图片地址
@@ -16,9 +23,9 @@ public class User {
     //用户登录密码
     private String password;
     //用户性别
-    private Gender gender;
+    private String gender;
     //用户余额
-    private double amount;
+    private BigDecimal amount;
     //用户支付密码
     private String payCode;
     //用户购物车
@@ -27,6 +34,42 @@ public class User {
     private String recording;
     //用户地址
     private String address;
+
+    public User(){}
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id='" + id + '\'' +
+                ", gmtCreated=" + gmtCreated +
+                ", gmtModifiled=" + gmtModifiled +
+                ", name='" + name + '\'' +
+                ", profile='" + profile + '\'' +
+                ", password='" + password + '\'' +
+                ", gender='" + gender + '\'' +
+                ", amount=" + amount +
+                ", payCode='" + payCode + '\'' +
+                ", shopping='" + shopping + '\'' +
+                ", recording='" + recording + '\'' +
+                ", address='" + address + '\'' +
+                '}';
+    }
+
+    public LocalDateTime getGmtCreated() {
+        return gmtCreated;
+    }
+
+    public void setGmtCreated(LocalDateTime gmtCreated) {
+        this.gmtCreated = gmtCreated;
+    }
+
+    public LocalDateTime getGmtModifiled() {
+        return gmtModifiled;
+    }
+
+    public void setGmtModifiled(LocalDateTime gmtModifiled) {
+        this.gmtModifiled = gmtModifiled;
+    }
 
     public String getId() {
         return id;
@@ -60,19 +103,19 @@ public class User {
         this.password = password;
     }
 
-    public Gender getGender() {
+    public String getGender() {
         return gender;
     }
 
-    public void setGender(Gender gender) {
+    public void setGender(String gender) {
         this.gender = gender;
     }
 
-    public double getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 
