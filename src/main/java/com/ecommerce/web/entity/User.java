@@ -1,17 +1,20 @@
 package com.ecommerce.web.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 @Entity
+@JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler" })
 public class User {
     //用户id
     @Id
     @GeneratedValue
-    private String id;
+    private int id;
     //创建时间
     private LocalDateTime gmtCreated;
     //修改时间
@@ -35,7 +38,7 @@ public class User {
     //用户地址
     private String address;
 
-    public User(){}
+    public User(){};
 
     @Override
     public String toString() {
@@ -71,11 +74,11 @@ public class User {
         this.gmtModifiled = gmtModifiled;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

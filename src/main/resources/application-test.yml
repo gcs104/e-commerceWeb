@@ -11,37 +11,10 @@ spring:
     password: 330226
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     show-sql: true
 
-user:
-  id: 1
-  name: 我是一个人
-  password: 12356
-  profile: http://5b0988e595225.cdn.sohucs.com/q_70,c_zoom,w_640/images/20181214/6e00a9e09e8d4be8af46ebcd6e44a9db.jpeg
-  gender: male
-  amount: 5000
-  payCode: 330226
-  shopping: 4,5
-  recording: 1,2,3
-  address: 地址1;地址2
 
-good:
-  id: 1
-  gmtCreate: 2020/01/01
-  gmtModifiled: 2020/01/20
-  name: 筷子
-  price: 10.0
-  notice: 无
 
-recording:
-  id: 4
-  gmtCreate: 2020/01/01
-  gmtModifiled: 2020/01/20
-  buyer: 1
-  good: 1
-  num: 10
-  amount: 100.0
-  isOver: false
 
 

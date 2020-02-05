@@ -1,25 +1,29 @@
 package com.ecommerce.web.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
+@JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler" })
 public class Recording {
     // 记录的id
     @Id
     @GeneratedValue
-    private String id;
+    private int id;
     // 记录的发生时间(添加入购物车的时间)
-    private Date gmtCreate;
+    private LocalDateTime gmtCreate;
     // 记录的修改时间（最后的修改时间为购买时间）
-    private Date gmtModifiled;
+    private LocalDateTime gmtModifiled;
     // 买家id
-    private String buyer;
+    private int buyer;
     // 商品id
-    private String good;
+    private int good;
     //购买数量
     private int num;
     //总价
@@ -27,43 +31,43 @@ public class Recording {
     //是否交易完成
     private boolean isOver;
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public Date getGmtCreate() {
+    public LocalDateTime getGmtCreate() {
         return gmtCreate;
     }
 
-    public void setGmtCreate(Date gmtCreate) {
+    public void setGmtCreate(LocalDateTime gmtCreate) {
         this.gmtCreate = gmtCreate;
     }
 
-    public Date getGmtModifiled() {
+    public LocalDateTime getGmtModifiled() {
         return gmtModifiled;
     }
 
-    public void setGmtModifiled(Date gmtModifiled) {
+    public void setGmtModifiled(LocalDateTime gmtModifiled) {
         this.gmtModifiled = gmtModifiled;
     }
 
-    public String getBuyer() {
+    public int getBuyer() {
         return buyer;
     }
 
-    public void setBuyer(String buyer) {
+    public void setBuyer(int buyer) {
         this.buyer = buyer;
     }
 
-    public String getGood() {
+    public int getGood() {
         return good;
     }
 
-    public void setGood(String good) {
+    public void setGood(int good) {
         this.good = good;
     }
 

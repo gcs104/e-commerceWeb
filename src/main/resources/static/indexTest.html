@@ -6,7 +6,7 @@
     <script src="/jquery-3.4.1.min.js"></script>
 </head>
 <body>
-<form class = "sign_in" method="post" action="UserTest">
+<form class = "sign_in" method="post" action="login">
     <div>姓名</div>
     <input type="text" name ="name">
     <div>密码</div>
@@ -15,14 +15,49 @@
     <input type="text" name ="gender">
     <div>支付密码</div>
     <input type="text" name ="payCode">
-    <button type="submit">提交</button>
+    <button type="submit">提交用户信息</button>
+</form>
+<!--@RequestParam("masterId")int masterId, @RequestParam("name") String name,-->
+<!--@RequestParam("price")BigDecimal price,@RequestParam("notice")String notice-->
+<form class = "sign_in" method="post" action="addGood">
+    <div>卖家ID</div>
+    <input type="text" name ="masterId">
+    <div>名称</div>
+    <input type="text" name ="name">
+    <div>价格</div>
+    <input type="text" name ="price">
+    <div>备注</div>
+    <input type="text" name ="notice" value = "无">
+    <button type="submit">添加商品信息</button>
+</form>
+<!--@RequestParam("buyer")int buyer,@RequestParam("good")int good,@RequestParam("num")int num-->
+<form class = "sign_in" method="post" action="recording">
+    <div>买家ID</div>
+    <input type="text" name ="buyer">
+    <div>商品ID</div>
+    <input type="text" name ="good">
+    <div>数量</div>
+    <input type="text" name ="num">
+    <button type="submit">添加交易信息</button>
 </form>
 
-<form class="search" method="get" action="UserTest">
+<form class="search" method="get" action="searchUser">
     <input type="text" name = "id">
-    <button type="submit">搜索</button>
+    <button type="submit">搜索用户</button>
 </form>
-
+<form class="search" method="get" action="searchGood">
+    <input type="text" name = "id">
+    <button type="submit">搜索商品</button>
+</form>
+<form class="search" method="get" action="recording">
+    <input type="text" name = "id">
+    <button type="submit">搜索记录</button>
+</form>
+<div>
+    <form method="post" action="init">
+        <button type="submit">初始化</button>
+    </form>
+</div>
 <script>
     $(function () {
 
