@@ -1,6 +1,7 @@
 package com.ecommerce.web.service.implement;
 
 import com.ecommerce.web.entity.User;
+import com.ecommerce.web.exception.InsufficientBalanceException;
 import com.ecommerce.web.repository.UserRepository;
 import com.ecommerce.web.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class UserServiceImpl implements UserService {
     }
     @Override
     public User search(int id) {
-        return userRepository.getOne(id);
+        return userRepository.findById(id).orElse(null);
     }
 
     @Override
@@ -42,6 +43,59 @@ public class UserServiceImpl implements UserService {
         user.setPayCode(payCode);
         user.setAmount(new BigDecimal(0));
         user.setGmtCreated(LocalDateTime.now());
+        user.setGmtModifiled(LocalDateTime.now());
+        return userRepository.save(user);
+    }
+
+    @Override
+    public User updateName(int id, String name) {
+        User user = search(id);
+        user.setName(name);
+        user.setGmtModifiled(LocalDateTime.now());
+        return userRepository.save(user);
+    }
+
+    @Override
+    public User updatePassword(int id, String password) {
+        User user = search(id);
+        user.setPassword(password);
+        user.setGmtModifiled(LocalDateTime.now());
+        return userRepository.save(user);
+    }
+
+    @Override
+    public User updatePayCode(int id, String payCode) {
+        User user = search(id);
+        user.setPayCode(payCode);
+        user.setGmtModifiled(LocalDateTime.now());
+        return userRepository.save(user);
+    }
+
+    @Override
+    public User updateProfile(int id, String profile) {
+        User user = search(id);
+        user.setProfile(profile);
+        user.setGmtModifiled(LocalDateTime.now());
+        return userRepository.save(user);
+    }
+
+    @Override
+    public User updateAddress(int id, String address) {
+        User user = search(id);
+        user.setAddress(address);
+        user.setGmtModifiled(LocalDateTime.now());
+        return userRepository.save(user);
+    }
+
+    @Override
+    public User updateAmount(int id, BigDecimal changeAmount) throws InsufficientBalanceException {
+        User user = search(id);
+        BigDecimal amount = user.getAmount().add(changeAmount);
+        if(amount.compareTo(new BigDecimal(0)) == -1){
+            throw new InsufficientBalanceException();
+        }
+
+        user.setAmount(amount);
         user.setGmtModifiled(LocalDateTime.now());
         return userRepository.save(user);
     }

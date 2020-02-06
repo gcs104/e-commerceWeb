@@ -26,7 +26,7 @@ public class RecordingServiceImpl implements RecordingService {
 
     @Override
     public Recording search(int id) {
-        return recordingRepository.getOne(id);
+        return recordingRepository.findById(id).orElse(null);
     }
 
     @Override
@@ -43,4 +43,3 @@ public class RecordingServiceImpl implements RecordingService {
         return recordingRepository.save(recording);
     }
 }
-

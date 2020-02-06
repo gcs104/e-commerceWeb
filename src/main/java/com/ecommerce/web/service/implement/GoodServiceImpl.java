@@ -25,7 +25,7 @@ public class GoodServiceImpl implements GoodService {
 
     @Override
     public Good search(int id) {
-        return goodRepository.getOne(id);
+        return goodRepository.findById(id).orElse(null);
     }
 
     @Override
