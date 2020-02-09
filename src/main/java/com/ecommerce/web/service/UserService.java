@@ -31,6 +31,6 @@ public interface UserService {
     User updateAddress(int id,String address);
 
     //更新余额
-    User updateAmount(int id, BigDecimal changeAmount) throws InsufficientBalanceException;
+    User updateAmount(int id, BigDecimal changeAmount,boolean isAdd) throws InsufficientBalanceException;
 
 }

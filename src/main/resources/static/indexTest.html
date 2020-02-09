@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script src="/jquery-3.4.1.min.js"></script>
+    <script src="jquery-3.4.1.min.js"></script>
 </head>
 <body>
 <form class = "sign_in" method="post" action="login">
@@ -58,9 +58,40 @@
         <button type="submit">初始化</button>
     </form>
 </div>
+<!--@RequestParam("isShopping")boolean isShopping,@RequestParam("recordingId")int recordingId,-->
+<!--@RequestParam("buyId")int buyId,@RequestParam("goodId")int goodId,-->
+<!--@RequestParam("num")int num-->
+<div class="buy">
+    <input id="1" type="text" placeholder="recordingId">
+    <button type="button">购买</button>
+    <p class="display"></p>
+</div>
 <script>
     $(function () {
-
+    console.log(1);
+        $(".buy button").on("click",function (e) {
+            console.log(2);
+            e.preventDefault();
+            let isShopping = true;
+            let recordingId = $("#1").val();
+            $.ajax(
+                {
+                    url:"buy",
+                    method:"get",
+                    data:{
+                        isShopping:isShopping,
+                        recordingId:recordingId,
+                        buyId:1,
+                        goodId:1,
+                        num:1
+                    },
+                    cache:false
+                }
+            ).done(function (data) {
+                console.log(3);
+                $(".buy .display").html("购买完成！");
+            });
+        });
     });
 
 </script>

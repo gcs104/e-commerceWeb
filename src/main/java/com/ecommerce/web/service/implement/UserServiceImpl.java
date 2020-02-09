@@ -26,7 +26,10 @@ public class UserServiceImpl implements UserService {
     }
     @Override
     public User search(int id) {
-        return userRepository.findById(id).orElse(null);
+        if(userRepository==null){
+            System.out.println("fuck!!!");
+        }
+        return  userRepository.findById(id).orElse(null);
     }
 
     @Override
@@ -88,11 +91,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updateAmount(int id, BigDecimal changeAmount) throws InsufficientBalanceException {
+    public User updateAmount(int id, BigDecimal changeAmount,boolean isAdd) throws InsufficientBalanceException {
+//        System.out.println("最下面的id为："+id);
         User user = search(id);
-        BigDecimal amount = user.getAmount().add(changeAmount);
-        if(amount.compareTo(new BigDecimal(0)) == -1){
-            throw new InsufficientBalanceException();
+
+        if(user == null){
+            System.out.println("发生了什么");
+            return null;
+        }
+        BigDecimal amount;
+        if(isAdd == true){
+            amount = user.getAmount().add(changeAmount);
+        }else{
+            amount = user.getAmount().subtract(changeAmount);
+            System.out.println("最后的钱为"+amount.toString());
+            if(amount.compareTo(new BigDecimal(0)) == -1){
+                throw new InsufficientBalanceException();
+            }
         }
 
         user.setAmount(amount);
