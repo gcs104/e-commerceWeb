@@ -25,8 +25,8 @@ public class GoodController {
     }
 
     @PostMapping(value = "/addGood")
-    public Good search(@RequestParam("masterId")String masterId, @RequestParam("name") String name,
-                       @RequestParam("price")BigDecimal price,@RequestParam("notice")String notice){
+    public Good search(@RequestParam("masterId") int masterId, @RequestParam("name") String name,
+                       @RequestParam("price")BigDecimal price, @RequestParam("notice")String notice){
         return goodService.create(masterId,name,price,notice);
     }
 }

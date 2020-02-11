@@ -17,7 +17,7 @@ public class RecordingController {
     }
 
     @PostMapping(value = "/recording")
-    public Recording create(@RequestParam("buyer")String buyer, @RequestParam("good") String good, @RequestParam("num")int num){
+    public Recording create(@RequestParam("buyer") int buyer, @RequestParam("good") String good, @RequestParam("num")int num){
         Recording recording = null;
         try{
             recording = recordingService.create(buyer,good,num);
@@ -32,8 +32,8 @@ public class RecordingController {
     }
 
     @GetMapping(value = "/buy")
-    public Recording buy(@RequestParam("isShopping")boolean isShopping,@RequestParam("recordingId")String recordingId,
-                         @RequestParam("buyId")String buyId,@RequestParam("goodId")String goodId,
+    public Recording buy(@RequestParam("isShopping")boolean isShopping, @RequestParam("recordingId")String recordingId,
+                         @RequestParam("buyId") int buyId, @RequestParam("goodId")String goodId,
                          @RequestParam("num")String num){
         try{
             if(isShopping){

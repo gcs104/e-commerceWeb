@@ -11,8 +11,11 @@ spring:
     password: 373d784e7f7c
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     show-sql: true
+
+config:
+  userIdAdd: 888887
 
 
 

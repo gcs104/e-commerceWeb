@@ -3,7 +3,6 @@ package com.ecommerce.web.entity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -20,7 +19,7 @@ public class Recording {
     // 记录的修改时间（最后的修改时间为购买时间）
     private LocalDateTime gmtModifiled;
     // 买家id
-    private String buyer;
+    private int buyer;
     // 商品id
     private String good;
     //购买数量
@@ -54,11 +53,11 @@ public class Recording {
         this.gmtModifiled = gmtModifiled;
     }
 
-    public String getBuyer() {
+    public int getBuyer() {
         return buyer;
     }
 
-    public void setBuyer(String buyer) {
+    public void setBuyer(int buyer) {
         this.buyer = buyer;
     }
 

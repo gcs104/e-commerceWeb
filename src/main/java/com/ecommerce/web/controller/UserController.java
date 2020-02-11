@@ -1,6 +1,7 @@
 package com.ecommerce.web.controller;
 
 import com.ecommerce.web.entity.User;
+import com.ecommerce.web.model.Config;
 import com.ecommerce.web.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,16 +14,20 @@ public class UserController {
     //注入用户服务
     private UserService userService;
     @Autowired
+    private Config CONFIG;
+    @Autowired
     void setUserService(UserService userService){
         this.userService = userService;
     }
 
     @GetMapping(value = "/searchUser")
-    public User updateUserTest(@RequestParam("id")String id){
-        User user = userService.search(id);
+    public User updateUserTest(@RequestParam("id") int id){
+        User user = userService.search(id - CONFIG.getUserIdAdd());
         if(user == null){
             return new User();
         }
+
+        user.setId(user.getId() + CONFIG.getUserIdAdd());
         return user;
     }
 
@@ -33,6 +38,7 @@ public class UserController {
         if(user == null){
             return new User();
         }
+        user.setId(user.getId() + CONFIG.getUserIdAdd());
         return user;
     }
 }

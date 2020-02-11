@@ -11,6 +11,6 @@ public interface GoodService {
     Good search(String id);
 
     //新建商品
-    Good create(String masterId, String name, BigDecimal price, String notice);
+    Good create(int masterId, String name, BigDecimal price, String notice);
 
 }

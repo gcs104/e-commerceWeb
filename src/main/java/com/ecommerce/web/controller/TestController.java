@@ -3,6 +3,7 @@ package com.ecommerce.web.controller;
 import com.ecommerce.web.entity.Good;
 import com.ecommerce.web.entity.Recording;
 import com.ecommerce.web.entity.User;
+import com.ecommerce.web.model.Config;
 import com.ecommerce.web.repository.GoodRepository;
 import com.ecommerce.web.repository.RecordingRepository;
 import com.ecommerce.web.repository.UserRepository;
@@ -15,33 +16,41 @@ import java.util.UUID;
 
 @RestController
 public class TestController {
+    Config CONFIG;
+
 
     UserRepository userRepository ;
-    @Autowired
-    void setUserRepository(UserRepository userRepository){
-        this.userRepository = userRepository;
-    }
+//    @Autowired
+//    void setUserRepository(UserRepository userRepository){
+//        this.userRepository = userRepository;
+//    }
     GoodRepository goodRepository ;
-    @Autowired
-    void setGoodRepository(GoodRepository goodRepository){
-        this.goodRepository = goodRepository;
-    }
+//    @Autowired
+//    void setGoodRepository(GoodRepository goodRepository){
+//        this.goodRepository = goodRepository;
+//    }
     RecordingRepository recordingRepository;
+//    @Autowired
+//    void setRecordingRepository(RecordingRepository recordingRepository){this.recordingRepository = recordingRepository;}
     @Autowired
-    void setRecordingRepository(RecordingRepository recordingRepository){this.recordingRepository = recordingRepository;}
-
+    public TestController(Config CONFIG, UserRepository userRepository, GoodRepository goodRepository, RecordingRepository recordingRepository) {
+        this.CONFIG = CONFIG;
+        this.userRepository = userRepository;
+        this.goodRepository = goodRepository;
+        this.recordingRepository = recordingRepository;
+    }
     @PostMapping("/init")
     public void init(){
         System.out.println("开始初始化数据");
-        String userUuid = UUID.randomUUID().toString().replaceAll("-","");
+        int userId = 1;
         String recordingId = UUID.randomUUID().toString().replaceAll("-","");
         String goodId = UUID.randomUUID().toString().replaceAll("-","");
-        System.out.println(userUuid);
-        initUser(userUuid,recordingId);
-        initGood(goodId,userUuid);
-        initRecord(recordingId,goodId,userUuid);
+        System.out.println(userId);
+        initUser(userId,recordingId);
+        initGood(goodId,userId);
+        initRecord(recordingId,goodId,userId);
     }
-    public void initUser(String uuid ,String recordingId){
+    public void initUser(int uuid , String recordingId){
         System.out.println("初始化用户测试数据");
         User user = new User();
         user.setId(uuid);
@@ -59,7 +68,7 @@ public class TestController {
         userRepository.save(user);
     }
 
-    public void initGood(String goodId,String userId){
+    public void initGood(String goodId, int userId){
         System.out.println("初始化商品测试数据");
         Good good = new Good();
         good.setId(goodId);
@@ -73,7 +82,7 @@ public class TestController {
 
     }
 
-    public void initRecord(String recordingId,String goodId,String userId){
+    public void initRecord(String recordingId, String goodId, int userId){
         System.out.println("初始化记录数据");
         Recording recording = new Recording();
         recording.setId(recordingId);

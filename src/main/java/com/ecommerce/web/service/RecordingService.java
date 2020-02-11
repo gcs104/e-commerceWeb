@@ -10,10 +10,10 @@ public interface RecordingService {
     Recording search(String id) ;
 
     //新建交易（加入购物车）
-    Recording create(String buyer, String good, int num) throws NoFindException;
+    Recording create(int buyer, String good, int num) throws NoFindException;
 
     //购买（在购物车中的购买）
     Recording buy(String recordingId) throws Exception;
     //购买（不在购物车中的购买）
-    Recording buy(String buyId, String goodId, int num) throws Exception;
+    Recording buy(int buyId, String goodId, int num) throws Exception;
 }

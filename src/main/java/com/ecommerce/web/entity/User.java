@@ -5,19 +5,19 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 @Entity
 @JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler" })
 public class User {
-    public void setId(String id) {
-        this.id = id;
-    }
+
 
     //用户id
     @Id
-    private String id;
+    @GeneratedValue
+    private int id;
     //创建时间
     private LocalDateTime gmtCreated;
     //修改时间
@@ -63,8 +63,10 @@ public class User {
     }
 
     public User(){};
-
-    public String getId() {
+    public void setId(int id) {
+        this.id = id;
+    }
+    public int getId() {
         return id;
     }
 

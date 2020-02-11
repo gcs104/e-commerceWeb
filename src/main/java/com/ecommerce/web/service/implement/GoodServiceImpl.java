@@ -7,7 +7,6 @@ import com.ecommerce.web.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -28,7 +27,7 @@ public class GoodServiceImpl implements GoodService {
     }
 
     @Override
-    public Good create(String masterId, String name, BigDecimal price, String notice) {
+    public Good create(int masterId, String name, BigDecimal price, String notice) {
         String uuid = UUID.randomUUID().toString().replaceAll("-","");
         Good good = new Good();
         good.setId(uuid);

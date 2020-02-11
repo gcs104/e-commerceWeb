@@ -2,6 +2,7 @@ package com.ecommerce.web.service.implement;
 
 import com.ecommerce.web.entity.User;
 import com.ecommerce.web.exception.InsufficientBalanceException;
+import com.ecommerce.web.exception.NoFindException;
 import com.ecommerce.web.repository.UserRepository;
 import com.ecommerce.web.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -19,7 +19,7 @@ public class UserServiceImpl implements UserService {
         this.userRepository = userRepository;
     }
     @Override
-    public User search(String id) {
+    public User search(int id) {
         if(userRepository==null){
             System.out.println("fuck!!!");
         }
@@ -32,11 +32,7 @@ public class UserServiceImpl implements UserService {
             System.out.println("未成功注入");
             return new User();
         }
-        String id = UUID.randomUUID().toString().replaceAll("-","");
-        System.out.println(id);
-
         User user = new User();
-        user.setId(id);
         user.setName(name);
         user.setPassword(password);
         user.setGender(gender);
@@ -48,7 +44,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updateName(String id, String name) {
+    public User updateName(int id, String name) {
         User user = search(id);
         user.setName(name);
         user.setGmtModifiled(LocalDateTime.now());
@@ -56,7 +52,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updatePassword(String id, String password) {
+    public User updatePassword(int id, String password) {
         User user = search(id);
         user.setPassword(password);
         user.setGmtModifiled(LocalDateTime.now());
@@ -64,7 +60,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updatePayCode(String id, String payCode) {
+    public User updatePayCode(int id, String payCode) {
         User user = search(id);
         user.setPayCode(payCode);
         user.setGmtModifiled(LocalDateTime.now());
@@ -72,7 +68,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updateProfile(String id, String profile) {
+    public User updateProfile(int id, String profile) {
         User user = search(id);
         user.setProfile(profile);
         user.setGmtModifiled(LocalDateTime.now());
@@ -80,16 +76,31 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updateAddress(String id, String address) {
+    public User updateAddress(int id, String address, boolean isAdd) throws Exception {
         User user = search(id);
-        user.setAddress(address);
-        user.setGmtModifiled(LocalDateTime.now());
-        return userRepository.save(user);
+        String oldAddress = user.getAddress();
+        if (isAdd) {
+            if (oldAddress == null || oldAddress.equals("")) {
+                user.setAddress(address);
+            } else {
+                user.setAddress(address + ";" + oldAddress);
+            }
+            user.setGmtModifiled(LocalDateTime.now());
+            return userRepository.save(user);
+        } else {
+            if (oldAddress == null || oldAddress.equals("")) {
+                throw new NoFindException();
+            }else{
+                //TODO
+            }
+        }
+        return null;
     }
+
 
     @Override
     //内部函数
-    public User updateGoodList(String id, String goodId) {
+    public User updateGoodList(int id, String goodId) {
         User user = search(id);
         String nowGoodId = user.getGoodList();
         if(goodId.equals("")){
@@ -101,7 +112,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updateAmount(String id, BigDecimal changeAmount, boolean isAdd) throws InsufficientBalanceException {
+    public User updateAmount(int id, BigDecimal changeAmount, boolean isAdd) throws InsufficientBalanceException {
 //        System.out.println("最下面的id为："+id);
         User user = search(id);
 

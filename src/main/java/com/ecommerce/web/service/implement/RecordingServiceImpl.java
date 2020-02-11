@@ -54,7 +54,7 @@ public class RecordingServiceImpl implements RecordingService {
     }
 
     @Override
-    public Recording create(String buyer, String goodId, int num) throws NoFindException {
+    public Recording create(int buyer, String goodId, int num) throws NoFindException {
         String uuid = UUID.randomUUID().toString().replaceAll("-","");
         Recording recording = new Recording();
         Good good = goodRepository.findById(goodId).orElse(null);
@@ -118,7 +118,7 @@ public class RecordingServiceImpl implements RecordingService {
 
     @Override
     @Transactional
-    public Recording buy(String buyId, String goodId, int num) throws Exception{
+    public Recording buy(int buyId, String goodId, int num) throws Exception{
         Recording recording = new Recording();
         Good good = goodRepository.findById(goodId).orElse(null);
         User user = userRepository.findById(buyId).orElse(null);

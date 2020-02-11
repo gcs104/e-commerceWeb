@@ -19,7 +19,7 @@ public class Good {
     //修改时间
     private LocalDateTime gmtModifiled;
     //卖家
-    private String masterId;
+    private int masterId;
     // 商品名称
     private String name;
     // 商品价格
@@ -75,11 +75,11 @@ public class Good {
         this.gmtModifiled = gmtModifiled;
     }
 
-    public String getMasterId() {
+    public int getMasterId() {
         return masterId;
     }
 
-    public void setMasterId(String masterId) {
+    public void setMasterId(int masterId) {
         this.masterId = masterId;
     }
 }
