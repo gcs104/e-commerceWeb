@@ -3,18 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script src="/jquery-3.4.1.min.js"></script>
+    <script src="jquery-3.4.1.min.js"></script>
 </head>
 <body>
-<div class="login"><p>登录/注册</p></div>
-<form class="search" action="/e-test/search">
-    <input type="text">
-    <button type="submit">搜索</button>
+<form class = "sign_in" method="post" action="login">
+    <div>姓名</div>
+    <input type="text" name ="name">
+    <div>密码</div>
+    <input type="text" name ="password">
+    <div>性别</div>
+    <input type="text" name ="gender">
+    <div>支付密码</div>
+    <input type="text" name ="payCode">
+    <button type="submit">提交用户信息</button>
+</form>
+<!--@RequestParam("masterId")int masterId, @RequestParam("name") String name,-->
+<!--@RequestParam("price")BigDecimal price,@RequestParam("notice")String notice-->
+<form class = "sign_in" method="post" action="addGood">
+    <div>卖家ID</div>
+    <input type="text" name ="masterId">
+    <div>名称</div>
+    <input type="text" name ="name">
+    <div>价格</div>
+    <input type="text" name ="price">
+    <div>备注</div>
+    <input type="text" name ="notice" value = "无">
+    <button type="submit">添加商品信息</button>
+</form>
+<!--@RequestParam("buyer")int buyer,@RequestParam("good")int good,@RequestParam("num")int num-->
+<form class = "sign_in" method="post" action="recording">
+    <div>买家ID</div>
+    <input type="text" name ="buyer">
+    <div>商品ID</div>
+    <input type="text" name ="good">
+    <div>数量</div>
+    <input type="text" name ="num">
+    <button type="submit">添加交易信息</button>
 </form>
 
+<form class="search" method="get" action="searchUser">
+    <input type="text" name = "id">
+    <button type="submit">搜索用户</button>
+</form>
+<form class="search" method="get" action="searchGood">
+    <input type="text" name = "id">
+    <button type="submit">搜索商品</button>
+</form>
+<form class="search" method="get" action="recording">
+    <input type="text" name = "id">
+    <button type="submit">搜索记录</button>
+</form>
+<div>
+    <form method="post" action="init">
+        <button type="submit" >初始化</button>
+    </form>
+</div>
+<!--@RequestParam("isShopping")boolean isShopping,@RequestParam("recordingId")int recordingId,-->
+<!--@RequestParam("buyId")int buyId,@RequestParam("goodId")int goodId,-->
+<!--@RequestParam("num")int num-->
+<div class="buy">
+    <input id="1" type="text" placeholder="recordingId">
+    <button type="button">购买</button>
+    <p class="display"></p>
+</div>
 <script>
     $(function () {
-
+    console.log(1);
+        $(".buy button").on("click",function (e) {
+            console.log(2);
+            e.preventDefault();
+            let isShopping = true;
+            let recordingId = $("#1").val();
+            $.ajax(
+                {
+                    url:"buy",
+                    method:"get",
+                    data:{
+                        isShopping:isShopping,
+                        recordingId:recordingId,
+                        buyId:1,
+                        goodId:1,
+                        num:1
+                    },
+                    cache:false
+                }
+            ).done(function (data) {
+                console.log(3);
+                $(".buy .display").html("购买完成！");
+            });
+        });
     });
 
 </script>

@@ -1,0 +1,194 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+a{
+    text-decoration: none;
+}
+body{
+    background-color: rgb(243, 238, 225);
+}
+/* top */
+.line{
+    color: gray;
+    font-size: 18px;
+    margin: 0 0.5em;
+}
+.top{
+    background-color: #333;
+    margin-top: 0px;
+    padding: 0px;
+    height: 48px;
+    width: 100%;
+    min-width: 1200px;
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
+}
+.container{
+    width: 1200px;
+    margin: auto;
+}
+.top-nav::before , .top-nav::after{
+    content: "";
+    display: table;
+}
+.top-nav::after{
+    clear: both;
+}
+.top-nav-left{
+    float: left;
+}
+.top-nav-right , .top-nav-cart{
+    float: right;
+}
+.top-nav-main{
+    margin:0;
+    padding: 0 0.5em;
+    height: 48px;
+    line-height: 48px;
+}
+.top-nav-main a{
+    color: #F0F0F0;
+    font-size: 18px;
+    margin: 0;
+    padding: 0;
+    height: 48px;
+    width: 128px;
+}
+.top-nav-main a:hover{
+    color: mediumslateblue;
+}
+.top-nav-cart a{
+    display: block;
+    height: 48px;
+    width: 128px;
+    text-align: center;
+    background-color: gray;
+}
+.top-nav-cart a:hover{
+    background-color: #F0F0F0;
+    color: black;
+}
+/* foot */
+.foot{
+    background-color: #F0F0F0;
+    border-top: 1px dashed gray;
+    padding: 0px auto;
+    width: 100%;
+    position: fixed;
+    z-index: 9;
+    bottom: 0px;
+}
+.foot-img{
+    float: left;
+    display: block;
+    border: 4px dashed royalblue;
+    height: 96px;
+    width: 96px;
+    margin: 16px 48px;
+}
+.foot-text{
+    margin-top: 48px;
+    float: right;
+    display: block;
+    font-size: 26px;
+    color: black;
+}
+.foot-text span{
+    color: red;
+}
+.foot-button{
+    display: block;
+    float: right;
+    margin: 48px 36px; 
+}
+.foot-button button{
+    margin-right: 16px;
+    border: none;
+    width: 96px;
+    height: 36px;
+    color: white;
+    font-size: 16px;
+    text-align: center;
+    border-radius: 24px;
+}
+#btnClear{
+    background-color: gray;
+    border: 1px solid gray;
+}
+#btnClear:hover{
+    background-color: white;
+    color: gray;
+}
+#btnBuy{
+    background-color: royalblue;
+    border: 1px solid royalblue;
+}
+#btnBuy:hover{
+    background-color: white;
+    color: royalblue;
+}
+/* main */
+.main{
+    margin: 16px auto;
+    min-width: 1200px;
+}
+.main-item{
+    height: 150px;
+    border: 4px dashed royalblue;
+    border-radius: 32px;
+    margin: 16px 0px;
+}
+.main-item-img{
+    float: left;
+    display: block;
+    border: 4px dashed royalblue;
+    height: 96px;
+    width: 96px;
+    margin: 24px 48px;
+}
+.main-item-text{
+    float: left;
+    display: block;
+    font-size: 26px;
+    margin: 54px 36px;
+}
+.main-item-price{
+    float: left;
+    display: block;
+    font-size: 26px;
+    margin: 54px 36px;
+    color: red;
+}
+.main-item button{
+    float: right;
+    display: block;
+    border: 1px solid gray;
+    height: 48px;
+    width: 100px;
+    color: white;
+    background-color: gray;
+    font-size: 16px;
+    text-align: center;
+    border: 1px solid gray;
+    border-radius: 24px;
+    margin: 49px 60px;
+}
+.main-item button:hover{
+    color: gray;
+    background-color: white;
+}
+
+/* 占位 */
+.blank{
+    height: 150px;
+}
+
+/*这些都是没有后端时的临时功能*/
+#topAfterLog{
+    display: none;
+}

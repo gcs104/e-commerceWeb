@@ -1,0 +1,155 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+a{
+    text-decoration: none;
+}
+body{
+    background-color: rgb(243, 238, 225);
+}
+/* top */
+.line{
+    color: gray;
+    font-size: 18px;
+    margin: 0 0.5em;
+}
+.top{
+    background-color: #333;
+    margin-top: 0px;
+    padding: 0px;
+    height: 48px;
+    width: 100%;
+    min-width: 1200px;
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
+}
+.container{
+    width: 1200px;
+    margin: auto;
+}
+.top-nav::before , .top-nav::after{
+    content: "";
+    display: table;
+}
+.top-nav::after{
+    clear: both;
+}
+.top-nav-left{
+    float: left;
+}
+.top-nav-right , .top-nav-cart{
+    float: right;
+}
+.top-nav-main{
+    margin:0;
+    padding: 0 0.5em;
+    height: 48px;
+    line-height: 48px;
+}
+.top-nav-main a{
+    color: #F0F0F0;
+    font-size: 18px;
+    margin: 0;
+    padding: 0;
+    height: 48px;
+    width: 128px;
+}
+.top-nav-main a:hover{
+    color: mediumslateblue;
+}
+.top-nav-cart a{
+    display: block;
+    height: 48px;
+    width: 128px;
+    text-align: center;
+    background-color: gray;
+}
+.top-nav-cart a:hover{
+    background-color: #F0F0F0;
+    color: black;
+}
+
+/* header */
+.header{
+    background-color: white;
+    height: 150px;
+    padding: 0px 16px;
+}
+.header::before , .header::after{
+    content: "";
+    display: table;
+}
+.header::after{
+    clear: both;
+}
+.header-logo{
+    float: left;
+    display: block;
+    width: 96px;
+    height: 96px;
+    border: 4px dashed royalblue;
+    margin-top: 24px;
+}
+.header-nav{
+    float: left;
+    display: block;
+}
+.header-nav-item{
+    font-size: 24px;
+    display: block;
+    float: left;
+    margin-left: 64px;
+    margin-top: 48px;
+}
+.header-nav-item :hover{
+    color: green;
+}
+.header-search{
+    float: right;
+}
+
+/* main */
+.main-item{
+    margin: 16px 0px;
+    background-color: white;
+    height: 196px;
+    border-top: 1px solid royalblue;
+}
+.main-item-img{
+    float: left;
+    display: block;
+    margin: 26px;
+    height: 144px;
+    width: 144px;
+}
+.main-item-disc{
+    float: left;
+    display: block;
+    padding-top: 64px;
+}
+#mainTitle{
+    font-size: 26px;
+}
+#mainText{
+    font-size: 18px;
+}
+#mainPrise{
+    font-size: 18px;
+    color: red;
+}
+/* bottom */
+.bottom{
+    text-align: center;
+    margin-top: 18px;
+    color: rgb(243, 238, 225);
+}
+
+/*这些都是没有后端时的临时功能*/
+#topAfterLog{
+    display: none;
+}

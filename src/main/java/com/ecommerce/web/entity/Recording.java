@@ -1,19 +1,24 @@
-package com.ecommerce.web.model;
+package com.ecommerce.web.entity;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import java.util.Date;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
-@ConfigurationProperties(prefix = "recording")
-@Component
+@Entity
+@JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler" })
 public class Recording {
     // 记录的id
+    @Id
+   // @GeneratedValue
     private String id;
     // 记录的发生时间(添加入购物车的时间)
-    private Date gmtCreate;
+    private LocalDateTime gmtCreate;
     // 记录的修改时间（最后的修改时间为购买时间）
-    private Date gmtModifiled;
+    private LocalDateTime gmtModifiled;
     // 买家id
     private String buyer;
     // 商品id
@@ -21,7 +26,7 @@ public class Recording {
     //购买数量
     private int num;
     //总价
-    private double amount;
+    private BigDecimal amount;
     //是否交易完成
     private boolean isOver;
 
@@ -33,19 +38,19 @@ public class Recording {
         this.id = id;
     }
 
-    public Date getGmtCreate() {
+    public LocalDateTime getGmtCreate() {
         return gmtCreate;
     }
 
-    public void setGmtCreate(Date gmtCreate) {
+    public void setGmtCreate(LocalDateTime gmtCreate) {
         this.gmtCreate = gmtCreate;
     }
 
-    public Date getGmtModifiled() {
+    public LocalDateTime getGmtModifiled() {
         return gmtModifiled;
     }
 
-    public void setGmtModifiled(Date gmtModifiled) {
+    public void setGmtModifiled(LocalDateTime gmtModifiled) {
         this.gmtModifiled = gmtModifiled;
     }
 
@@ -73,11 +78,11 @@ public class Recording {
         this.num = num;
     }
 
-    public double getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 
