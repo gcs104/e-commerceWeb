@@ -11,10 +11,13 @@ import java.time.LocalDateTime;
 @Entity
 @JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler" })
 public class User {
+    public void setId(String id) {
+        this.id = id;
+    }
+
     //用户id
     @Id
-    @GeneratedValue
-    private int id;
+    private String id;
     //创建时间
     private LocalDateTime gmtCreated;
     //修改时间
@@ -37,8 +40,8 @@ public class User {
     private String recording;
     //用户地址
     private String address;
-
-    public User(){};
+    //用户出售商品
+    private String goodList;
 
     @Override
     public String toString() {
@@ -55,7 +58,22 @@ public class User {
                 ", shopping='" + shopping + '\'' +
                 ", recording='" + recording + '\'' +
                 ", address='" + address + '\'' +
+                ", goodList='" + goodList + '\'' +
                 '}';
+    }
+
+    public User(){};
+
+    public String getId() {
+        return id;
+    }
+
+    public String getGoodList() {
+        return goodList;
+    }
+
+    public void setGoodList(String goodList) {
+        this.goodList = goodList;
     }
 
     public LocalDateTime getGmtCreated() {
@@ -72,14 +90,6 @@ public class User {
 
     public void setGmtModifiled(LocalDateTime gmtModifiled) {
         this.gmtModifiled = gmtModifiled;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {

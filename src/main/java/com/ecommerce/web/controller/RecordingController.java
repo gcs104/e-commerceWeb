@@ -17,7 +17,7 @@ public class RecordingController {
     }
 
     @PostMapping(value = "/recording")
-    public Recording create(@RequestParam("buyer")int buyer,@RequestParam("good")int good,@RequestParam("num")int num){
+    public Recording create(@RequestParam("buyer")String buyer, @RequestParam("good") String good, @RequestParam("num")int num){
         Recording recording = null;
         try{
             recording = recordingService.create(buyer,good,num);
@@ -27,7 +27,7 @@ public class RecordingController {
         return recording;
     }
     @GetMapping(value = "/recording")
-    public Recording search(@RequestParam("id")int id){
+    public Recording search(@RequestParam("id")String id){
         return recordingService.search(id);
     }
 
@@ -37,10 +37,10 @@ public class RecordingController {
                          @RequestParam("num")String num){
         try{
             if(isShopping){
-                System.out.println("?213:"+Integer.parseInt(recordingId));
-                return recordingService.buy(Integer.parseInt(recordingId));
+                System.out.println("?213:"+recordingId);
+                return recordingService.buy(recordingId);
             }else{
-                return recordingService.buy(Integer.parseInt(buyId),Integer.parseInt(goodId),Integer.parseInt(num));
+                return recordingService.buy(buyId,goodId,Integer.parseInt(num));
             }
         }catch(Exception e){
             e.printStackTrace();

@@ -5,27 +5,21 @@ import com.ecommerce.web.exception.InsufficientBalanceException;
 import com.ecommerce.web.repository.UserRepository;
 import com.ecommerce.web.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService {
     UserRepository userRepository ;
     @Autowired
-    void setUserRepository(UserRepository userRepository){
+    public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
     @Override
-    public User search(int id) {
+    public User search(String id) {
         if(userRepository==null){
             System.out.println("fuck!!!");
         }
@@ -38,8 +32,11 @@ public class UserServiceImpl implements UserService {
             System.out.println("未成功注入");
             return new User();
         }
+        String id = UUID.randomUUID().toString().replaceAll("-","");
+        System.out.println(id);
 
         User user = new User();
+        user.setId(id);
         user.setName(name);
         user.setPassword(password);
         user.setGender(gender);
@@ -51,7 +48,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updateName(int id, String name) {
+    public User updateName(String id, String name) {
         User user = search(id);
         user.setName(name);
         user.setGmtModifiled(LocalDateTime.now());
@@ -59,7 +56,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updatePassword(int id, String password) {
+    public User updatePassword(String id, String password) {
         User user = search(id);
         user.setPassword(password);
         user.setGmtModifiled(LocalDateTime.now());
@@ -67,7 +64,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updatePayCode(int id, String payCode) {
+    public User updatePayCode(String id, String payCode) {
         User user = search(id);
         user.setPayCode(payCode);
         user.setGmtModifiled(LocalDateTime.now());
@@ -75,7 +72,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updateProfile(int id, String profile) {
+    public User updateProfile(String id, String profile) {
         User user = search(id);
         user.setProfile(profile);
         user.setGmtModifiled(LocalDateTime.now());
@@ -83,7 +80,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updateAddress(int id, String address) {
+    public User updateAddress(String id, String address) {
         User user = search(id);
         user.setAddress(address);
         user.setGmtModifiled(LocalDateTime.now());
@@ -91,7 +88,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updateAmount(int id, BigDecimal changeAmount,boolean isAdd) throws InsufficientBalanceException {
+    //内部函数
+    public User updateGoodList(String id, String goodId) {
+        User user = search(id);
+        String nowGoodId = user.getGoodList();
+        if(goodId.equals("")){
+            user.setGoodList(goodId);
+        }else{
+            user.setGoodList(goodId + ";" + nowGoodId);
+        }
+        return userRepository.save(user);
+    }
+
+    @Override
+    public User updateAmount(String id, BigDecimal changeAmount, boolean isAdd) throws InsufficientBalanceException {
 //        System.out.println("最下面的id为："+id);
         User user = search(id);
 

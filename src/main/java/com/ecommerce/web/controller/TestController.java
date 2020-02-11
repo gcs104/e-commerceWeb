@@ -6,16 +6,12 @@ import com.ecommerce.web.entity.User;
 import com.ecommerce.web.repository.GoodRepository;
 import com.ecommerce.web.repository.RecordingRepository;
 import com.ecommerce.web.repository.UserRepository;
-import com.ecommerce.web.service.UserService;
-import com.ecommerce.web.service.implement.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @RestController
 public class TestController {
@@ -37,13 +33,18 @@ public class TestController {
     @PostMapping("/init")
     public void init(){
         System.out.println("开始初始化数据");
-        initUser();
-        initGood();
-        initRecord();
+        String userUuid = UUID.randomUUID().toString().replaceAll("-","");
+        String recordingId = UUID.randomUUID().toString().replaceAll("-","");
+        String goodId = UUID.randomUUID().toString().replaceAll("-","");
+        System.out.println(userUuid);
+        initUser(userUuid,recordingId);
+        initGood(goodId,userUuid);
+        initRecord(recordingId,goodId,userUuid);
     }
-    public void initUser(){
+    public void initUser(String uuid ,String recordingId){
         System.out.println("初始化用户测试数据");
         User user = new User();
+        user.setId(uuid);
         user.setName("我是一个人");
         user.setGmtCreated(LocalDateTime.now());
         user.setGmtModifiled(LocalDateTime.now());
@@ -53,34 +54,36 @@ public class TestController {
         user.setGender("male");
         user.setPayCode("330226");
         user.setAddress("地址1;地址2");
-        user.setRecording("");
-        user.setShopping("3");
+        //user.setRecording("");
+        user.setShopping(recordingId);
         userRepository.save(user);
     }
 
-    public void initGood(){
+    public void initGood(String goodId,String userId){
         System.out.println("初始化商品测试数据");
         Good good = new Good();
+        good.setId(goodId);
         good.setGmtCreated(LocalDateTime.of(2020,1,1,12,30));
         good.setGmtModifiled(LocalDateTime.now());
-        good.setMasterId(1);
+        good.setMasterId(userId);
         good.setName("筷子");
         good.setPrice(new BigDecimal(10));
         good.setNotice("无");
         goodRepository.save(good);
 
-    };
+    }
 
-    public void initRecord(){
+    public void initRecord(String recordingId,String goodId,String userId){
         System.out.println("初始化记录数据");
         Recording recording = new Recording();
-        recording.setGmtCreate(LocalDateTime.of(2020,01,01,12,30));
+        recording.setId(recordingId);
+        recording.setGmtCreate(LocalDateTime.of(2020,1,1,12,30));
         recording.setGmtModifiled(LocalDateTime.now());
-        recording.setBuyer(1);
-        recording.setGood(2);
+        recording.setBuyer(userId);
+        recording.setGood(goodId);
         recording.setNum(10);
         recording.setAmount(new BigDecimal(100));
         recording.setOver(false);
         recordingRepository.save(recording);
-    };
+    }
 }

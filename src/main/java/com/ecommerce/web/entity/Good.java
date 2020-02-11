@@ -3,7 +3,6 @@ package com.ecommerce.web.entity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -13,14 +12,14 @@ import java.time.LocalDateTime;
 public class Good {
     // 商品id
     @Id
-    @GeneratedValue
-    private int id;
+   // @GeneratedValue
+    private String id;
     //创建时间
     private LocalDateTime gmtCreated;
     //修改时间
     private LocalDateTime gmtModifiled;
     //卖家
-    private int masterId;
+    private String masterId;
     // 商品名称
     private String name;
     // 商品价格
@@ -28,11 +27,11 @@ public class Good {
     //备注
     private String notice;
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -76,11 +75,11 @@ public class Good {
         this.gmtModifiled = gmtModifiled;
     }
 
-    public int getMasterId() {
+    public String getMasterId() {
         return masterId;
     }
 
-    public void setMasterId(int masterId) {
+    public void setMasterId(String masterId) {
         this.masterId = masterId;
     }
 }

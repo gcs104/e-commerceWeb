@@ -18,7 +18,7 @@ public class UserController {
     }
 
     @GetMapping(value = "/searchUser")
-    public User updateUserTest(@RequestParam("id")int id){
+    public User updateUserTest(@RequestParam("id")String id){
         User user = userService.search(id);
         if(user == null){
             return new User();

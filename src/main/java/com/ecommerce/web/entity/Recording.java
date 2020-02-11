@@ -7,23 +7,22 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 @JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler" })
 public class Recording {
     // 记录的id
     @Id
-    @GeneratedValue
-    private int id;
+   // @GeneratedValue
+    private String id;
     // 记录的发生时间(添加入购物车的时间)
     private LocalDateTime gmtCreate;
     // 记录的修改时间（最后的修改时间为购买时间）
     private LocalDateTime gmtModifiled;
     // 买家id
-    private int buyer;
+    private String buyer;
     // 商品id
-    private int good;
+    private String good;
     //购买数量
     private int num;
     //总价
@@ -31,11 +30,11 @@ public class Recording {
     //是否交易完成
     private boolean isOver;
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -55,19 +54,19 @@ public class Recording {
         this.gmtModifiled = gmtModifiled;
     }
 
-    public int getBuyer() {
+    public String getBuyer() {
         return buyer;
     }
 
-    public void setBuyer(int buyer) {
+    public void setBuyer(String buyer) {
         this.buyer = buyer;
     }
 
-    public int getGood() {
+    public String getGood() {
         return good;
     }
 
-    public void setGood(int good) {
+    public void setGood(String good) {
         this.good = good;
     }
 

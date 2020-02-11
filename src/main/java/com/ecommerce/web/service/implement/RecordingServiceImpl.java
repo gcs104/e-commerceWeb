@@ -4,14 +4,12 @@ import com.ecommerce.web.entity.Good;
 import com.ecommerce.web.entity.Recording;
 import com.ecommerce.web.entity.User;
 import com.ecommerce.web.exception.DoubleOperationException;
-import com.ecommerce.web.exception.InsufficientBalanceException;
 import com.ecommerce.web.exception.NoFindException;
 import com.ecommerce.web.repository.GoodRepository;
 import com.ecommerce.web.repository.RecordingRepository;
 import com.ecommerce.web.repository.UserRepository;
 import com.ecommerce.web.service.RecordingService;
 import com.ecommerce.web.service.UserService;
-import com.mysql.cj.x.protobuf.MysqlxDatatypes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,19 +18,21 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class RecordingServiceImpl implements RecordingService {
     RecordingRepository recordingRepository;
     GoodRepository goodRepository;
     UserRepository userRepository;
-    UserService userService = new UserServiceImpl();
+    UserService userService ;
 
     @Autowired
     public RecordingServiceImpl(RecordingRepository recordingRepository, GoodRepository goodRepository, UserRepository userRepository, UserService userService) {
         this.recordingRepository = recordingRepository;
         this.goodRepository = goodRepository;
         this.userRepository = userRepository;
+        this.userService = userService;
     }
 
 //    @Autowired
@@ -49,12 +49,13 @@ public class RecordingServiceImpl implements RecordingService {
 //    }
 
     @Override
-    public Recording search(int id) {
+    public Recording search(String id) {
         return recordingRepository.findById(id).orElse(null);
     }
 
     @Override
-    public Recording create(int buyer, int goodId, int num) throws NoFindException {
+    public Recording create(String buyer, String goodId, int num) throws NoFindException {
+        String uuid = UUID.randomUUID().toString().replaceAll("-","");
         Recording recording = new Recording();
         Good good = goodRepository.findById(goodId).orElse(null);
         User user = userRepository.findById(buyer).orElse(null);
@@ -63,6 +64,7 @@ public class RecordingServiceImpl implements RecordingService {
             throw new NoFindException();
         }
 
+        recording.setId(uuid);
         recording.setBuyer(buyer);
         recording.setGood(goodId);
         recording.setNum(num);
@@ -84,8 +86,8 @@ public class RecordingServiceImpl implements RecordingService {
     }
 
     @Override
-    //@Transactional
-    public Recording buy(int recordingId) throws Exception {
+    @Transactional
+    public Recording buy(String recordingId) throws Exception {
         Recording recording = search(recordingId);
         User user = userRepository.findById(recording.getBuyer()).orElse(null);
         if(user == null){
@@ -97,26 +99,26 @@ public class RecordingServiceImpl implements RecordingService {
         String[] strings= user.getShopping().split(";");
         List<String> list = new ArrayList<>();
         for(String s:strings){
-            if(!s.equals(String.valueOf(recordingId)) ){
+            if(!s.equals(recordingId)){
                 list.add(s);
             }
         }
         user.setShopping(String.join(";",list.toArray(new String[list.size()])));
-        if(user.getRecording().equals("")){
-            user.setRecording(String.valueOf(recordingId));
+        if(user.getRecording() == null|| user.getRecording().equals("") ){
+            user.setRecording(recordingId);
         }else{
             user.setRecording(recordingId + ";" + user.getRecording());
         }
         userRepository.save(user);
         System.out.println("服务层的amount为："+recording.getAmount().toString());
-        userService.updateAmount(1,recording.getAmount(),false);
+        userService.updateAmount(recording.getBuyer(),recording.getAmount(),false);
         recording.setOver(true);
         return recordingRepository.save(recording);
     }
 
     @Override
     @Transactional
-    public Recording buy(int buyId, int goodId, int num) throws Exception{
+    public Recording buy(String buyId, String goodId, int num) throws Exception{
         Recording recording = new Recording();
         Good good = goodRepository.findById(goodId).orElse(null);
         User user = userRepository.findById(buyId).orElse(null);
@@ -134,8 +136,11 @@ public class RecordingServiceImpl implements RecordingService {
         recording.setGmtModifiled(LocalDateTime.now());
         Recording saveRecording = recordingRepository.save(recording);
 
-        String userRecording = user.getRecording() + ";" + recording.getId();
-        user.setShopping(userRecording);
+        if(user.getRecording() == null || user.getRecording().equals("")){
+            user.setRecording(recording.getId());
+        }else{
+            user.setRecording(recording.getId() + ";" + user.getRecording());
+        }
         userRepository.save(user);
         userService.updateAmount(buyId,changeAmount,false);
 
