@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.concurrent.ExecutorService;
+
 @RestController
 public class RecordingController {
     RecordingService recordingService;
@@ -28,7 +30,11 @@ public class RecordingController {
     }
     @GetMapping(value = "/recording")
     public Recording search(@RequestParam("id")String id){
-        return recordingService.search(id);
+        try{
+            return recordingService.search(id);
+        }catch(Exception e){e.printStackTrace();}
+        return  null;
+        //TODO 引导至错误页面
     }
 
     @GetMapping(value = "/buy")
@@ -46,5 +52,12 @@ public class RecordingController {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @PostMapping(value = "/recording/delete")
+    public void delete(@RequestParam("recordingId")String recordingId){
+        try{
+            recordingService.delete(recordingId);
+        }catch (Exception e){e.printStackTrace();}
     }
 }

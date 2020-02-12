@@ -26,6 +26,16 @@ public class Good {
     private BigDecimal price;
     //备注
     private String notice;
+    //商品图片
+    private String image;
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 
     public String getId() {
         return id;

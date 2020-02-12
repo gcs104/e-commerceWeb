@@ -13,32 +13,49 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
     //注入用户服务
     private UserService userService;
-    @Autowired
     private Config CONFIG;
+
     @Autowired
-    void setUserService(UserService userService){
+    public UserController(UserService userService, Config CONFIG) {
         this.userService = userService;
+        this.CONFIG = CONFIG;
     }
 
     @GetMapping(value = "/searchUser")
-    public User updateUserTest(@RequestParam("id") int id){
-        User user = userService.search(id - CONFIG.getUserIdAdd());
-        if(user == null){
-            return new User();
+    public User searchUser(@RequestParam("id") int id) {
+        try {
+            User user = userService.search(id - CONFIG.getUserIdAdd());
+            user.setId(user.getId() + CONFIG.getUserIdAdd());
+            return user;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
-        user.setId(user.getId() + CONFIG.getUserIdAdd());
-        return user;
+        return null;
     }
 
     @PostMapping(value = "/login")
-    public User CreateUserTest(@RequestParam("name") String name,@RequestParam("password") String password,
-                               @RequestParam("gender") String gender,@RequestParam("payCode") String payCode){
+    public User createUser(@RequestParam("name") String name, @RequestParam("password") String password,
+                           @RequestParam("gender") String gender, @RequestParam("payCode") String payCode) {
         User user = userService.create(name, password, gender, payCode);
-        if(user == null){
+        if (user == null) {
             return new User();
         }
         user.setId(user.getId() + CONFIG.getUserIdAdd());
         return user;
     }
+
+    @PostMapping(value = "/updateUser")
+    public User updateAdress(@RequestParam("userId") int userId, @RequestParam("name") String name,
+                             @RequestParam("profile") String profile, @RequestParam("address") String address) {
+        int id = userId - CONFIG.getUserIdAdd();
+        try {
+            User user = userService.update(id, name, profile, address);
+            user.setId(userId);
+            return user;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
+

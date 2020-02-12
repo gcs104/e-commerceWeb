@@ -49,8 +49,12 @@ public class RecordingServiceImpl implements RecordingService {
 //    }
 
     @Override
-    public Recording search(String id) {
-        return recordingRepository.findById(id).orElse(null);
+    public Recording search(String id)throws NoFindException {
+        Recording recording = recordingRepository.findById(id).orElse(null);
+        if(recording == null){
+            throw new NoFindException();
+        }
+        return recording;
     }
 
     @Override
@@ -145,5 +149,17 @@ public class RecordingServiceImpl implements RecordingService {
         userService.updateAmount(buyId,changeAmount,false);
 
         return saveRecording;
+    }
+
+    @Override
+    @Transactional
+    public void delete(String id) throws Exception {
+        Recording recording = search(id);
+        if(!recording.isOver()){
+            recordingRepository.delete(recording);
+        }else{
+          throw new NoFindException();
+        }
+
     }
 }

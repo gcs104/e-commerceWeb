@@ -7,7 +7,7 @@ public interface RecordingService {
     //提供和交易记录有关的服务
 
     //通过id查询交易
-    Recording search(String id) ;
+    Recording search(String id)throws NoFindException ;
 
     //新建交易（加入购物车）
     Recording create(int buyer, String good, int num) throws NoFindException;
@@ -16,4 +16,7 @@ public interface RecordingService {
     Recording buy(String recordingId) throws Exception;
     //购买（不在购物车中的购买）
     Recording buy(int buyId, String goodId, int num) throws Exception;
+
+    //删除（仅限于在购物车中的删除）
+    void delete(String id) throws Exception;
 }
