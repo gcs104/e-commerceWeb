@@ -4,10 +4,12 @@ import com.ecommerce.web.entity.Good;
 import com.ecommerce.web.entity.Recording;
 import com.ecommerce.web.entity.User;
 import com.ecommerce.web.exception.DoubleOperationException;
+import com.ecommerce.web.exception.HistoryCannotUpdateException;
 import com.ecommerce.web.exception.NoFindException;
 import com.ecommerce.web.repository.GoodRepository;
 import com.ecommerce.web.repository.RecordingRepository;
 import com.ecommerce.web.repository.UserRepository;
+import com.ecommerce.web.service.GoodService;
 import com.ecommerce.web.service.RecordingService;
 import com.ecommerce.web.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,14 +28,17 @@ public class RecordingServiceImpl implements RecordingService {
     GoodRepository goodRepository;
     UserRepository userRepository;
     UserService userService ;
+    GoodService goodService;
 
     @Autowired
-    public RecordingServiceImpl(RecordingRepository recordingRepository, GoodRepository goodRepository, UserRepository userRepository, UserService userService) {
+    public RecordingServiceImpl(RecordingRepository recordingRepository, GoodRepository goodRepository, UserRepository userRepository, UserService userService, GoodService goodService) {
         this.recordingRepository = recordingRepository;
         this.goodRepository = goodRepository;
         this.userRepository = userRepository;
         this.userService = userService;
+        this.goodService = goodService;
     }
+
 
 //    @Autowired
 //    void setRecordingRepository(RecordingRepository recordingRepository){
@@ -160,6 +165,19 @@ public class RecordingServiceImpl implements RecordingService {
         }else{
           throw new NoFindException();
         }
+    }
 
+    @Override
+    @Transactional
+    public Recording update(String id, int num) throws Exception {
+        Recording recording = search(id);
+        if(recording.isOver()){
+            throw new HistoryCannotUpdateException();
+        }
+        Good good = goodService.search(recording.getGood());
+        recording.setNum(num);
+        recording.setAmount(good.getPrice().multiply(new BigDecimal(num)));
+        recording.setGmtModifiled(LocalDateTime.now());
+        return recordingRepository.save(recording);
     }
 }

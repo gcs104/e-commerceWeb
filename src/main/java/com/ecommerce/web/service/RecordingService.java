@@ -19,4 +19,7 @@ public interface RecordingService {
 
     //删除（仅限于在购物车中的删除）
     void delete(String id) throws Exception;
+
+    //修改（仅限在购物车中的修改，仅限修改购买数量）
+    Recording update(String id,int num) throws Exception;
 }

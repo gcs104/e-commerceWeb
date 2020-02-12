@@ -60,4 +60,12 @@ public class RecordingController {
             recordingService.delete(recordingId);
         }catch (Exception e){e.printStackTrace();}
     }
+
+    @PostMapping(value = "/recording/update")
+    public Recording update(@RequestParam("recordingId")String id,@RequestParam("num")int num){
+        try{
+            return recordingService.update(id,num);
+        }catch (Exception e){e.printStackTrace();}
+        return null;
+    }
 }

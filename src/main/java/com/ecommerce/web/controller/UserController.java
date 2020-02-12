@@ -44,7 +44,7 @@ public class UserController {
         return user;
     }
 
-    @PostMapping(value = "/updateUser")
+    @PostMapping(value = "/user/update")
     public User updateAdress(@RequestParam("userId") int userId, @RequestParam("name") String name,
                              @RequestParam("profile") String profile, @RequestParam("address") String address) {
         int id = userId - CONFIG.getUserIdAdd();
