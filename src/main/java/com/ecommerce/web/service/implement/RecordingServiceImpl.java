@@ -12,6 +12,7 @@ import com.ecommerce.web.repository.UserRepository;
 import com.ecommerce.web.service.GoodService;
 import com.ecommerce.web.service.RecordingService;
 import com.ecommerce.web.service.UserService;
+import com.ecommerce.web.util.DisplayUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,7 +39,6 @@ public class RecordingServiceImpl implements RecordingService {
         this.userService = userService;
         this.goodService = goodService;
     }
-
 
 //    @Autowired
 //    void setRecordingRepository(RecordingRepository recordingRepository){
@@ -90,7 +90,6 @@ public class RecordingServiceImpl implements RecordingService {
             user.setShopping(userShoppingRecording);
         }
         userRepository.save(user);
-
         return recording;
     }
 
@@ -98,10 +97,8 @@ public class RecordingServiceImpl implements RecordingService {
     @Transactional
     public Recording buy(String recordingId) throws Exception {
         Recording recording = search(recordingId);
-        User user = userRepository.findById(recording.getBuyer()).orElse(null);
-        if(user == null){
-            throw new NoFindException();
-        }if(recording.isOver()){
+        User user = userService.search(recording.getBuyer());
+        if(recording.isOver()){
             throw new DoubleOperationException();
         }
 
@@ -112,7 +109,7 @@ public class RecordingServiceImpl implements RecordingService {
                 list.add(s);
             }
         }
-        user.setShopping(String.join(";",list.toArray(new String[list.size()])));
+        user.setShopping(String.join(";",list));
         if(user.getRecording() == null|| user.getRecording().equals("") ){
             user.setRecording(recordingId);
         }else{
@@ -160,11 +157,20 @@ public class RecordingServiceImpl implements RecordingService {
     @Transactional
     public void delete(String id) throws Exception {
         Recording recording = search(id);
-        if(!recording.isOver()){
-            recordingRepository.delete(recording);
-        }else{
-          throw new NoFindException();
+        if(recording.isOver()){
+            throw new NoFindException();
         }
+        User user = userService.search(recording.getBuyer());
+        List<String> shoppingList = new ArrayList<>();
+        for(String s:user.getShopping().split(";")){
+            if(!s.equals(id)){
+                shoppingList.add(s);
+            }
+        }
+        user.setShopping(String.join(";",shoppingList));
+
+        recordingRepository.delete(recording);
+
     }
 
     @Override

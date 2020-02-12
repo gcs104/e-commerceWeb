@@ -66,6 +66,13 @@
     <button type="button">购买</button>
     <p class="display"></p>
 </div>
+
+<!--删除测试-->
+<div class = "delete">
+    <input type="text" class="recordingId" placeholder="recordingId">
+    <button type="button">删除</button>
+    <p class="display"></p>
+</div>
 <script>
     $(function () {
     console.log(1);
@@ -90,6 +97,25 @@
             ).done(function (data) {
                 console.log(3);
                 $(".buy .display").html("购买完成！");
+            });
+        });
+
+        $(".delete button").on("click",function (e) {
+            console.log(4);
+            e.preventDefault();
+            let id = $(".delete input").val();
+            $.ajax(
+                {
+                    url:"recording/delete",
+                    method:"post",
+                    data:{
+                        recordingId: id
+                    },
+                    cache:false
+                }
+            ).done(function (data) {
+                console.log(5);
+                $(".delete .display").html("删除完成");
             });
         });
     });

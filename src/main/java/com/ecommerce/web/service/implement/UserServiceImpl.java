@@ -5,6 +5,7 @@ import com.ecommerce.web.exception.InsufficientBalanceException;
 import com.ecommerce.web.exception.NoFindException;
 import com.ecommerce.web.repository.UserRepository;
 import com.ecommerce.web.service.UserService;
+import com.ecommerce.web.util.DisplayUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -57,6 +58,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User updatePassword(int id, String password) throws NoFindException{
+        id = id;
         User user = search(id);
         user.setPassword(password);
         user.setGmtModifiled(LocalDateTime.now());

@@ -18,8 +18,9 @@ public interface RecordingService {
     Recording buy(int buyId, String goodId, int num) throws Exception;
 
     //删除（仅限于在购物车中的删除）
+    //TODO 修改用户的购物车
     void delete(String id) throws Exception;
 
     //修改（仅限在购物车中的修改，仅限修改购买数量）
-    Recording update(String id,int num) throws Exception;
+    Recording update(String id, int num) throws Exception;
 }
