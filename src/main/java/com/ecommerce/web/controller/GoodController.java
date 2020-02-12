@@ -21,12 +21,18 @@ public class GoodController {
 
     @GetMapping(value = "/searchGood")
     public Good search(@RequestParam("id")String id){
-        return goodService.search(id);
+        try{
+            return goodService.search(id);
+        }catch (Exception e){e.printStackTrace();}
+      return null;
     }
 
     @PostMapping(value = "/addGood")
     public Good search(@RequestParam("masterId") int masterId, @RequestParam("name") String name,
                        @RequestParam("price")BigDecimal price, @RequestParam("notice")String notice){
-        return goodService.create(masterId,name,price,notice);
+        try{
+            return goodService.create(masterId,name,price,notice);
+        }catch (Exception e){e.printStackTrace();}
+        return null;
     }
 }
