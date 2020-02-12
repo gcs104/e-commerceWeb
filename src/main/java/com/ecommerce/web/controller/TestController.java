@@ -7,6 +7,7 @@ import com.ecommerce.web.model.Config;
 import com.ecommerce.web.repository.GoodRepository;
 import com.ecommerce.web.repository.RecordingRepository;
 import com.ecommerce.web.repository.UserRepository;
+import com.ecommerce.web.util.DisplayUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +17,7 @@ import java.util.UUID;
 
 @RestController
 public class TestController {
-    Config CONFIG;
+    DisplayUtil displayUtil;
 
 
     UserRepository userRepository ;
@@ -33,27 +34,25 @@ public class TestController {
 //    @Autowired
 //    void setRecordingRepository(RecordingRepository recordingRepository){this.recordingRepository = recordingRepository;}
     @Autowired
-    public TestController(Config CONFIG, UserRepository userRepository, GoodRepository goodRepository, RecordingRepository recordingRepository) {
-        this.CONFIG = CONFIG;
+    public TestController(DisplayUtil displayUtil, UserRepository userRepository, GoodRepository goodRepository, RecordingRepository recordingRepository) {
+        this.displayUtil = displayUtil;
         this.userRepository = userRepository;
         this.goodRepository = goodRepository;
         this.recordingRepository = recordingRepository;
     }
+
     @PostMapping("/init")
     public void init(){
         System.out.println("开始初始化数据");
-        int userId = 1;
         String recordingId = UUID.randomUUID().toString().replaceAll("-","");
         String goodId = UUID.randomUUID().toString().replaceAll("-","");
-        System.out.println(userId);
-        initUser(userId,recordingId);
-        initGood(goodId,userId);
-        initRecord(recordingId,goodId,userId);
+        User user = initUser(recordingId);
+        initGood(goodId,user.getId());
+        initRecord(recordingId,goodId,user.getId());
     }
-    public void initUser(int uuid , String recordingId){
+    public User initUser( String recordingId){
         System.out.println("初始化用户测试数据");
         User user = new User();
-        user.setId(uuid);
         user.setName("我是一个人");
         user.setGmtCreated(LocalDateTime.now());
         user.setGmtModifiled(LocalDateTime.now());
@@ -65,7 +64,7 @@ public class TestController {
         user.setAddress("地址1;地址2");
         //user.setRecording("");
         user.setShopping(recordingId);
-        userRepository.save(user);
+        return userRepository.save(user);
     }
 
     public void initGood(String goodId, int userId){

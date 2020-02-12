@@ -119,6 +119,7 @@ public class RecordingServiceImpl implements RecordingService {
         System.out.println("服务层的amount为："+recording.getAmount().toString());
         userService.updateAmount(recording.getBuyer(),recording.getAmount(),false);
         recording.setOver(true);
+        recording.setGmtModifiled(LocalDateTime.now());
         return recordingRepository.save(recording);
     }
 

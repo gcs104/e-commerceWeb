@@ -110,11 +110,12 @@ public class UserServiceImpl implements UserService {
     public User updateGoodList(int id, String goodId)throws Exception {
         User user = search(id);
         String nowGoodId = user.getGoodList();
-        if(goodId.equals("")){
+        if(nowGoodId == null||nowGoodId.equals("")){
             user.setGoodList(goodId);
         }else{
             user.setGoodList(goodId + ";" + nowGoodId);
         }
+        user.setGmtModifiled(LocalDateTime.now());
         return userRepository.save(user);
     }
 
