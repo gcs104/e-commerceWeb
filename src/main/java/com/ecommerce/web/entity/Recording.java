@@ -22,12 +22,22 @@ public class Recording {
     private int buyer;
     // 商品id
     private String good;
+    //商品名称
+    private String goodName;
     //购买数量
     private int num;
     //总价
     private BigDecimal amount;
     //是否交易完成
     private boolean isOver;
+
+    public String getGoodName() {
+        return goodName;
+    }
+
+    public void setGoodName(String goodName) {
+        this.goodName = goodName;
+    }
 
     public String getId() {
         return id;

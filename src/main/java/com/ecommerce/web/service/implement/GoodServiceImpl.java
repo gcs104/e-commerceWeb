@@ -7,6 +7,7 @@ import com.ecommerce.web.exception.NoFindException;
 import com.ecommerce.web.repository.GoodRepository;
 import com.ecommerce.web.service.GoodService;
 import com.ecommerce.web.service.UserService;
+import com.ecommerce.web.util.ToolUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,12 +20,15 @@ import java.util.UUID;
 
 @Service
 public class GoodServiceImpl implements GoodService {
-    GoodRepository goodRepository;
-    UserService userService;
+    private GoodRepository goodRepository;
+    private UserService userService;
+    private ToolUtil toolUtil;
+
     @Autowired
-    public GoodServiceImpl(GoodRepository goodRepository, UserService userService) {
+    public GoodServiceImpl(GoodRepository goodRepository, UserService userService,ToolUtil toolUtil) {
         this.goodRepository = goodRepository;
         this.userService = userService;
+        this.toolUtil = toolUtil;
     }
 
     @Override
@@ -34,6 +38,16 @@ public class GoodServiceImpl implements GoodService {
             throw new NoFindException();
         }
         return good;
+    }
+
+    @Override
+    public List<Good> searchFields(String fields) throws NoFindException{
+        List<Good> goods ;
+        goods = goodRepository.findByFieldsInName(fields);
+        if(goods == null || goods.isEmpty()){
+            throw new NoFindException();
+        }
+        return goods;
     }
 
     @Override
@@ -78,14 +92,7 @@ public class GoodServiceImpl implements GoodService {
         if(user.getGoodList() == null){
             throw new FindErrorObjectException();
         }
-        List<String> list = new ArrayList<>();
-
-        for(String s : user.getGoodList().split(";")){
-            if(!s.equals(id)){
-                list.add(s);
-            }
-        }
-        user.setGoodList(String.join(";",list));
+        user.setGoodList(toolUtil.deleteIdFromList(id,user.getGoodList()));
         user.setGmtModifiled(LocalDateTime.now());
 
         goodRepository.delete(good);

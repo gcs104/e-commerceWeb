@@ -5,7 +5,6 @@ import com.ecommerce.web.exception.InsufficientBalanceException;
 import com.ecommerce.web.exception.NoFindException;
 import com.ecommerce.web.repository.UserRepository;
 import com.ecommerce.web.service.UserService;
-import com.ecommerce.web.util.DisplayUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

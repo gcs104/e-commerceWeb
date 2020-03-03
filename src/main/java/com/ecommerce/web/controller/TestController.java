@@ -3,11 +3,10 @@ package com.ecommerce.web.controller;
 import com.ecommerce.web.entity.Good;
 import com.ecommerce.web.entity.Recording;
 import com.ecommerce.web.entity.User;
-import com.ecommerce.web.model.Config;
 import com.ecommerce.web.repository.GoodRepository;
 import com.ecommerce.web.repository.RecordingRepository;
 import com.ecommerce.web.repository.UserRepository;
-import com.ecommerce.web.util.DisplayUtil;
+import com.ecommerce.web.util.ToolUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +16,7 @@ import java.util.UUID;
 
 @RestController
 public class TestController {
-    DisplayUtil displayUtil;
+    ToolUtil displayUtil;
 
 
     UserRepository userRepository ;
@@ -34,7 +33,7 @@ public class TestController {
 //    @Autowired
 //    void setRecordingRepository(RecordingRepository recordingRepository){this.recordingRepository = recordingRepository;}
     @Autowired
-    public TestController(DisplayUtil displayUtil, UserRepository userRepository, GoodRepository goodRepository, RecordingRepository recordingRepository) {
+    public TestController(ToolUtil displayUtil, UserRepository userRepository, GoodRepository goodRepository, RecordingRepository recordingRepository) {
         this.displayUtil = displayUtil;
         this.userRepository = userRepository;
         this.goodRepository = goodRepository;

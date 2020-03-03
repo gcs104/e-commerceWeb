@@ -4,13 +4,15 @@ import com.ecommerce.web.entity.Good;
 import com.ecommerce.web.exception.NoFindException;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public interface GoodService {
     //提供和商品有关的服务
 
     //通过id查询商品
     Good search(String id) throws NoFindException;
-
+    //通过字符串查询商品,若不存在返回null
+    List<Good> searchFields(String fields)throws NoFindException;
     //新建商品
     Good create(int masterId, String name, BigDecimal price, String notice) throws Exception;
 

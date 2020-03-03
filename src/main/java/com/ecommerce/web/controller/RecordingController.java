@@ -2,7 +2,7 @@ package com.ecommerce.web.controller;
 
 import com.ecommerce.web.entity.Recording;
 import com.ecommerce.web.service.RecordingService;
-import com.ecommerce.web.util.DisplayUtil;
+import com.ecommerce.web.util.ToolUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class RecordingController {
     RecordingService recordingService;
-    DisplayUtil displayUtil;
+    ToolUtil displayUtil;
     @Autowired
-    public RecordingController(RecordingService recordingService,DisplayUtil displayUtil) {
+    public RecordingController(RecordingService recordingService, ToolUtil displayUtil) {
         this.recordingService = recordingService;
         this.displayUtil = displayUtil;
     }

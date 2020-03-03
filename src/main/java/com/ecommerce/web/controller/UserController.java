@@ -2,7 +2,7 @@ package com.ecommerce.web.controller;
 
 import com.ecommerce.web.entity.User;
 import com.ecommerce.web.service.UserService;
-import com.ecommerce.web.util.DisplayUtil;
+import com.ecommerce.web.util.ToolUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
     //注入用户服务
     private UserService userService;
-    private DisplayUtil displayUtil;
+    private ToolUtil displayUtil;
 
     @Autowired
-    public UserController(UserService userService, DisplayUtil displayUtil) {
+    public UserController(UserService userService, ToolUtil displayUtil) {
         this.userService = userService;
         this.displayUtil = displayUtil;
     }

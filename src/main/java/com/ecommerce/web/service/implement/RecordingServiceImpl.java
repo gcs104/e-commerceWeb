@@ -12,7 +12,7 @@ import com.ecommerce.web.repository.UserRepository;
 import com.ecommerce.web.service.GoodService;
 import com.ecommerce.web.service.RecordingService;
 import com.ecommerce.web.service.UserService;
-import com.ecommerce.web.util.DisplayUtil;
+import com.ecommerce.web.util.ToolUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +21,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TooManyListenersException;
 import java.util.UUID;
 
 @Service
@@ -30,14 +31,16 @@ public class RecordingServiceImpl implements RecordingService {
     UserRepository userRepository;
     UserService userService ;
     GoodService goodService;
+    ToolUtil toolUtil;
 
     @Autowired
-    public RecordingServiceImpl(RecordingRepository recordingRepository, GoodRepository goodRepository, UserRepository userRepository, UserService userService, GoodService goodService) {
+    public RecordingServiceImpl(RecordingRepository recordingRepository, GoodRepository goodRepository, UserRepository userRepository, UserService userService, GoodService goodService,ToolUtil toolUtil) {
         this.recordingRepository = recordingRepository;
         this.goodRepository = goodRepository;
         this.userRepository = userRepository;
         this.userService = userService;
         this.goodService = goodService;
+        this.toolUtil = toolUtil;
     }
 
 //    @Autowired
@@ -63,6 +66,15 @@ public class RecordingServiceImpl implements RecordingService {
     }
 
     @Override
+    public List<Recording> searchFields(String fields) throws NoFindException {
+        List<Recording> recordings = recordingRepository.findByFieldsInName(fields);
+        if(recordings == null || recordings.isEmpty()){
+            throw new NoFindException();
+        }
+        return recordings;
+    }
+
+    @Override
     public Recording create(int buyer, String goodId, int num) throws NoFindException {
         String uuid = UUID.randomUUID().toString().replaceAll("-","");
         Recording recording = new Recording();
@@ -76,6 +88,7 @@ public class RecordingServiceImpl implements RecordingService {
         recording.setId(uuid);
         recording.setBuyer(buyer);
         recording.setGood(goodId);
+        recording.setGoodName(good.getName());
         recording.setNum(num);
         recording.setOver(false);
         recording.setGmtCreate(LocalDateTime.now());
@@ -136,6 +149,7 @@ public class RecordingServiceImpl implements RecordingService {
 
         recording.setBuyer(buyId);
         recording.setGood(goodId);
+        recording.setGoodName(good.getName());
         recording.setNum(num);
         recording.setOver(true);
         recording.setGmtCreate(LocalDateTime.now());
@@ -182,9 +196,15 @@ public class RecordingServiceImpl implements RecordingService {
             throw new HistoryCannotUpdateException();
         }
         Good good = goodService.search(recording.getGood());
+        User user = userService.search(recording.getBuyer());
+
         recording.setNum(num);
         recording.setAmount(good.getPrice().multiply(new BigDecimal(num)));
         recording.setGmtModifiled(LocalDateTime.now());
+        user.setShopping(toolUtil.deleteIdFromList(recording.getId(),user.getShopping()));
+        user.setGmtModifiled(LocalDateTime.now());
+        userRepository.save(user);
+
         return recordingRepository.save(recording);
     }
 }

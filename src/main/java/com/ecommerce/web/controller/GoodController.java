@@ -2,7 +2,7 @@ package com.ecommerce.web.controller;
 
 import com.ecommerce.web.entity.Good;
 import com.ecommerce.web.service.GoodService;
-import com.ecommerce.web.util.DisplayUtil;
+import com.ecommerce.web.util.ToolUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,14 +10,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @RestController
 public class GoodController {
     //注入商品服务
     private GoodService goodService;
-    private DisplayUtil displayUtil;
+    private ToolUtil displayUtil;
     @Autowired
-    public GoodController(GoodService goodService, DisplayUtil displayUtil) {
+    public GoodController(GoodService goodService, ToolUtil displayUtil) {
         this.goodService = goodService;
         this.displayUtil = displayUtil;
     }
@@ -28,6 +29,18 @@ public class GoodController {
             return displayUtil.pack(goodService.search(id));
         }catch (Exception e){e.printStackTrace();}
       return null;
+    }
+
+    @GetMapping(value = "/good/search")
+    public List<Good> searchFields(@RequestParam("fields")String fields){
+        List<Good> goods;
+        try{
+            goods = goodService.searchFields(fields);
+            return goods;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @PostMapping(value = "/addGood")
