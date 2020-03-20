@@ -3,6 +3,7 @@ package com.ecommerce.web.service;
 import com.ecommerce.web.entity.Good;
 import com.ecommerce.web.entity.Recording;
 import com.ecommerce.web.exception.NoFindException;
+import com.github.pagehelper.PageInfo;
 
 import java.util.List;
 
@@ -26,4 +27,8 @@ public interface RecordingService {
 
     //修改（仅限在购物车中的修改，仅限修改购买数量）
     Recording update(String id, int num) throws Exception;
-}
+
+    //得到交易记录
+    public PageInfo getList(String str, int pageNum, int pageSize);
+
+    }

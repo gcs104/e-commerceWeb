@@ -8,6 +8,8 @@ import com.ecommerce.web.repository.GoodRepository;
 import com.ecommerce.web.service.GoodService;
 import com.ecommerce.web.service.UserService;
 import com.ecommerce.web.util.ToolUtil;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -96,5 +98,10 @@ public class GoodServiceImpl implements GoodService {
         user.setGmtModifiled(LocalDateTime.now());
 
         goodRepository.delete(good);
+    }
+    @Override
+    public PageInfo getGoodsPage(int pageNum,int pageSize,List<Good> list){
+        PageHelper.startPage(pageNum,pageSize);
+        return new PageInfo<>(list);
     }
 }

@@ -3,6 +3,7 @@ package com.ecommerce.web.controller;
 import com.ecommerce.web.entity.Good;
 import com.ecommerce.web.service.GoodService;
 import com.ecommerce.web.util.ToolUtil;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,11 +33,13 @@ public class GoodController {
     }
 
     @GetMapping(value = "/good/search")
-    public List<Good> searchFields(@RequestParam("fields")String fields){
+    public PageInfo searchFields(@RequestParam("fields")String fields,
+                                   @RequestParam(value = "pageNum",defaultValue = "1")int pageNum,
+                                   @RequestParam(value = "pageSize",defaultValue = "5")int pageSize){
         List<Good> goods;
         try{
             goods = goodService.searchFields(fields);
-            return goods;
+            return goodService.getGoodsPage(pageNum,pageSize,goods);
         }catch (Exception e){
             e.printStackTrace();
         }

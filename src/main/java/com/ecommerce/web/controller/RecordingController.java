@@ -1,22 +1,28 @@
 package com.ecommerce.web.controller;
 
 import com.ecommerce.web.entity.Recording;
+import com.ecommerce.web.entity.User;
+import com.ecommerce.web.exception.NoFindException;
 import com.ecommerce.web.service.RecordingService;
+import com.ecommerce.web.service.UserService;
 import com.ecommerce.web.util.ToolUtil;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
+@RequestMapping("/user")
 public class RecordingController {
     RecordingService recordingService;
     ToolUtil displayUtil;
+    UserService userService;
     @Autowired
-    public RecordingController(RecordingService recordingService, ToolUtil displayUtil) {
+    public RecordingController(RecordingService recordingService, ToolUtil displayUtil,UserService userService) {
         this.recordingService = recordingService;
         this.displayUtil = displayUtil;
+        this.userService=userService;
     }
 
     @PostMapping(value = "/recording")
@@ -31,6 +37,7 @@ public class RecordingController {
         }
         return null;
     }
+
     @GetMapping(value = "/recording")
     public Recording search(@RequestParam("id") String id){
         try{
@@ -69,6 +76,32 @@ public class RecordingController {
         try{
             return displayUtil.pack(recordingService.update(id,num));
         }catch (Exception e){e.printStackTrace();}
+        return null;
+    }
+    @PostMapping(value ="/recording/shoppinglist")//购物车
+    public PageInfo list ( @RequestParam(value = "pageNum",defaultValue = "1")int pageNum,
+                           @RequestParam(value = "pageSize",defaultValue = "5")int pageSize,
+                           @RequestParam("userId")int id){
+        try{
+            User user=userService.search(id);
+            String shopping=user.getShopping();
+           return recordingService.getList(shopping,pageNum,pageSize);
+        } catch (NoFindException e) {
+            e.printStackTrace();
+        }
+         return null;
+    }
+    @PostMapping(value ="/recording/historylist")//历史交易
+    public PageInfo historylist ( @RequestParam(value = "pageNum",defaultValue = "1")int pageNum,
+                           @RequestParam(value = "pageSize",defaultValue = "5")int pageSize,
+                           @RequestParam("userId")int id){
+        try{
+            User user=userService.search(id);
+            String recording=user.getRecording();
+            return recordingService.getList(recording,pageNum,pageSize);
+        } catch (NoFindException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 }

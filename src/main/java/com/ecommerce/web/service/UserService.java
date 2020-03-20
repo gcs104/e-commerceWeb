@@ -40,4 +40,6 @@ public interface UserService {
     //我突然觉得用户名头像地址应该是一起更新的——就像网站里的个人信息更新页面一样。
     User update(int id,String name,String profile,String address) throws Exception;
 
-}
+    public boolean login(int id,String password) throws NoFindException ;
+
+    }

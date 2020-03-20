@@ -2,6 +2,7 @@ package com.ecommerce.web.service;
 
 import com.ecommerce.web.entity.Good;
 import com.ecommerce.web.exception.NoFindException;
+import com.github.pagehelper.PageInfo;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -23,4 +24,7 @@ public interface GoodService {
     //商品删除
     //同上。TODO
     void delete(String id)throws NoFindException;
-}
+
+    public PageInfo getGoodsPage(int pageNum, int pageSize, List<Good> list);
+    //商品分页
+    }

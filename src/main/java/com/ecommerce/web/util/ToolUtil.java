@@ -57,4 +57,23 @@ public class ToolUtil {
         }
         return String.join(";",list);
     }
+
+    //信息返回
+    public String result(Object data,String msg){
+
+            return "result{" +
+                    ", data='" + data + '\'' +
+                    ", msg=" + msg +
+                    '}';
+        }
+
+
+    public User secret(User user){
+        user.setPassword("*******");
+        user.setPayCode("*****");
+        return user;
+    }
+
+
+
 }

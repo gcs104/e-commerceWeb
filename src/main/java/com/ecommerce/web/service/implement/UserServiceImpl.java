@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -28,6 +29,17 @@ public class UserServiceImpl implements UserService {
             throw new NoFindException();
         }
         return user;
+    }
+    @Override
+    public boolean login(int id,String password) throws NoFindException {
+        User user = userRepository.findById(id).orElse(null);
+        if(user == null){
+            throw new NoFindException();
+        }
+        if(user.getPassword().equals(password)){
+            return true;
+        }
+        return false;
     }
 
     @Override

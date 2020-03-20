@@ -13,6 +13,8 @@ import com.ecommerce.web.service.GoodService;
 import com.ecommerce.web.service.RecordingService;
 import com.ecommerce.web.service.UserService;
 import com.ecommerce.web.util.ToolUtil;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -207,4 +209,16 @@ public class RecordingServiceImpl implements RecordingService {
 
         return recordingRepository.save(recording);
     }
+    @Override
+    public PageInfo getList(String str,int pageNum,int pageSize){
+        String[] split =str.split(";");
+        List<Recording> list= new ArrayList<>();
+        for(String id:split){
+            Recording recording=recordingRepository.findRecordingById(id);
+            list.add(recording);
+        }
+        PageHelper.startPage(pageNum,pageSize);
+        return new PageInfo<>(list);
+        }
+
 }

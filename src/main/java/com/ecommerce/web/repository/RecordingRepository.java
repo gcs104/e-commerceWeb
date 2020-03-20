@@ -12,4 +12,7 @@ import java.util.List;
 public interface RecordingRepository extends JpaRepository<Recording,String> {
     @Query(value = "select * from recording where goodName like %:fields% ",nativeQuery = true)
     List<Recording> findByFieldsInName(String fields);
+    @Query(value = "select * from recording where id = ?1 ",nativeQuery = true)
+    Recording findRecordingById (String id);
+
 }
