@@ -83,7 +83,7 @@ public class RecordingController {
                            @RequestParam(value = "pageSize",defaultValue = "5")int pageSize,
                            @RequestParam("userId")int id){
         try{
-            User user=userService.search(id);
+            User user=userService.search(displayUtil.unpack(id));
             String shopping=user.getShopping();
            return recordingService.getList(shopping,pageNum,pageSize);
         } catch (NoFindException e) {

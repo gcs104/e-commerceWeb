@@ -48,11 +48,11 @@ public class UserController {
 
     @PostMapping("/login")
     public Object login( @RequestParam("id") int id,@RequestParam("password") String password,HttpServletRequest request) throws JSONException, NoFindException {
-        if (userService.login(id, password)) {
+        if (userService.login(displayUtil.unpack(id), password)) {
 
             //如果成功了，聚合需要返回的信息
 
-            User user =userService.search(id);
+            User user =userService.search(displayUtil.unpack(id));
             request.getSession().setAttribute(ConstantUtils.USER_SESSION_KEY,user);
             return displayUtil.result(displayUtil.secret(user),"登录成功");
 
